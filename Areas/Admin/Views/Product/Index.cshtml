@@ -1,0 +1,68 @@
+﻿@model List<Product>
+
+<div>
+    <div style="margin-bottom: 15px;">
+        <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn btn-success">Create New Product</a>
+    </div>
+
+    <table class="table table-bordered" style="table-layout: fixed; width: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 5%;">Id</th>
+                <th style="width: 20%;">Name</th>
+                <th style="width: 25%;">Description</th>
+                <th style="width: 10%;">Price</th>
+                <th style="width: 10%;">Main Image</th>
+                <th style="width: 10%;">Hover Image</th>
+                <th style="width: 10%;">Rating</th>
+                <th style="width: 10%;">Active</th>
+                <th style="width: 30%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                    <td><img src="@product.MainImagePath" alt="Main Image" style="max-width: 80px; height: auto;" /></td>
+                    <td><img src="@product.HoverImagePath" alt="Hover Image" style="max-width: 80px; height: auto;" /></td>
+                    <td>@product.Rating</td>
+                    <td>@(product.IsDeleted ? "Inactive" : "Active")</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm"
+                           asp-area="Admin"
+                           asp-controller="Product"
+                           asp-action="Update"
+                           asp-route-id="@product.Id">
+                            Update
+                        </a>
+
+                        <form asp-area="Admin"
+                              asp-controller="Product"
+                              asp-action="Delete"
+                              asp-route-id="@product.Id"
+                              method="post"
+                              style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+
+                        <form asp-area="Admin"
+                              asp-controller="Product"
+                              asp-action="Toggle"
+                              asp-route-id="@product.Id"
+                              method="post"
+                              style="display:inline; margin-left: 5px;">
+                            <button type="submit" class="btn btn-sm @(product.IsDeleted ? "btn-secondary" : "btn-info")">
+                                @(product.IsDeleted ? "Inactive" : "Active")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</div>

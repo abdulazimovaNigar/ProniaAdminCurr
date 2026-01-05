@@ -1,0 +1,66 @@
+﻿@model List<Shipping>
+
+<div>
+    <div style="margin-bottom: 15px;">
+        <a asp-area="Admin" asp-controller="Shipping" asp-action="Create" class="btn btn-success">Create New Shipping</a>
+    </div>
+<table class="table table-bordered" style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            <th style="width: 5%;">Id</th>
+            <th style="width: 20%;">Name</th>
+            <th style="width: 25%;">Description</th>
+            <th style="width: 15%;">Image</th>
+            <th style="width: 10%;">Active</th>
+            <th style="width: 30%;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shipping in Model)
+        {
+            <tr>
+                <td>@shipping.Id</td>
+                <td>@shipping.Name</td>
+                <td>@shipping.Description</td>
+                <td>
+                    <img src="@shipping.ImageUrl" alt="Shipping Image" style="max-width: 100px; height: auto;" />
+                </td>
+                <td>
+                    @(shipping.IsDeleted ? "Inactive" : "Active")
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm"
+                       asp-area="Admin"
+                       asp-controller="Shipping"
+                       asp-action="Update"
+                       asp-route-id="@shipping.Id">
+                        Update
+                    </a>
+
+                    <form asp-area="Admin"
+                          asp-controller="Shipping"
+                          asp-action="Delete"
+                          asp-route-id="@shipping.Id"
+                          method="post"
+                          style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+
+                    <form asp-area="Admin"
+                          asp-controller="Shipping"
+                          asp-action="Toggle"
+                          asp-route-id="@shipping.Id"
+                          method="post"
+                          style="display:inline; margin-left: 5px;">
+                        <button type="submit" class="btn btn-sm @(shipping.IsDeleted ? "btn-secondary" : "btn-info")">
+                            @(shipping.IsDeleted ? "Inactive" : "Active")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+</div>
+</div>

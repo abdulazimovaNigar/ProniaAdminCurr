@@ -1,0 +1,43 @@
+﻿@model Shipping
+
+
+
+<form method="post" asp-area="Admin" asp-controller="Shipping" asp-action="Update">
+    <input type="hidden" asp-for="Id" />
+    <br />
+    <h2>Update Shipping</h2>
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageUrl">Image URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div style="margin-top: 10px;">
+                <img src="@Model.ImageUrl" alt="Current Image" style="max-width: 150px; height: auto;" />
+            </div>
+        }
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsDeleted">Is Deleted</label>
+        <input asp-for="IsDeleted" type="checkbox" />
+    </div>
+
+    <div style="margin-top: 10px;">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-area="Admin" asp-controller="Shipping" asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+</div>
