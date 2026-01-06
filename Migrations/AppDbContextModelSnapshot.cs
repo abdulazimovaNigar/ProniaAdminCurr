@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProniaAdmin.Contexts;
+using Pronia.Contexts;
 
 #nullable disable
 
-namespace ProniaAdmin.Migrations
+namespace Pronia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -155,7 +155,7 @@ namespace ProniaAdmin.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProniaAdmin.Models.AppUser", b =>
+            modelBuilder.Entity("Pronia.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -228,7 +228,7 @@ namespace ProniaAdmin.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ProniaAdmin.Models.Category", b =>
+            modelBuilder.Entity("Pronia.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,10 +251,10 @@ namespace ProniaAdmin.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorys");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ProniaAdmin.Models.Product", b =>
+            modelBuilder.Entity("Pronia.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +269,6 @@ namespace ProniaAdmin.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HoverImagePath")
@@ -288,13 +287,14 @@ namespace ProniaAdmin.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Rating")
+                        .HasPrecision(2, 1)
                         .HasColumnType("decimal(2,1)");
 
                     b.Property<string>("SKU")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -307,7 +307,7 @@ namespace ProniaAdmin.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ProniaAdmin.Models.Shipping", b =>
+            modelBuilder.Entity("Pronia.Models.Shipping", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -352,7 +352,7 @@ namespace ProniaAdmin.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ProniaAdmin.Models.AppUser", null)
+                    b.HasOne("Pronia.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -361,7 +361,7 @@ namespace ProniaAdmin.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ProniaAdmin.Models.AppUser", null)
+                    b.HasOne("Pronia.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -376,7 +376,7 @@ namespace ProniaAdmin.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProniaAdmin.Models.AppUser", null)
+                    b.HasOne("Pronia.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -385,16 +385,16 @@ namespace ProniaAdmin.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ProniaAdmin.Models.AppUser", null)
+                    b.HasOne("Pronia.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProniaAdmin.Models.Product", b =>
+            modelBuilder.Entity("Pronia.Models.Product", b =>
                 {
-                    b.HasOne("ProniaAdmin.Models.Category", "Category")
+                    b.HasOne("Pronia.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)

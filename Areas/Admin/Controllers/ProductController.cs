@@ -1,20 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProniaAdmin.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Pronia.Contexts;
 
 namespace ProniaAdmin.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[AutoValidateAntiforgeryToken]
 public class ProductController(AppDbContext _context) : Controller
 {
     public IActionResult Index()
     {
-        var products = _context.Products.ToList();
+        var products = _context.Products.Include(c => c.Category).ToList();
         return View(products);
     }
 
     [HttpGet]
     public IActionResult Create()
     {
+        var categories = _context.Categories.ToList();
+
+        ViewBag.Categories = categories;
+
         return View();
     }
 
@@ -24,7 +30,16 @@ public class ProductController(AppDbContext _context) : Controller
         if (!ModelState.IsValid) return View(product);
         product.CreatedDate = DateTime.UtcNow.AddHours(4);
         product.IsDeleted = false;
-        _context.Add(product);
+
+        var isExistCategory = _context.Products.Any(x => x.Id == product.CategoryId);
+
+        if (!isExistCategory) 
+        {
+            ModelState.AddModelError("", "No such Category");
+            return View(product);
+        }
+
+        _context.Products.Add(product);
         _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
@@ -33,8 +48,8 @@ public class ProductController(AppDbContext _context) : Controller
     public IActionResult Delete(int id)
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
-        if (product == null) return NotFound("Product isvnot found!");
-        _context.Remove(product);
+        if (product == null) return NotFound("Product is not found!");
+        _context.Products.Remove(product);
         _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
@@ -62,6 +77,9 @@ public class ProductController(AppDbContext _context) : Controller
         existProduct.CategoryId = product.CategoryId;
         existProduct.MainImagePath = product.MainImagePath;
         existProduct.HoverImagePath = product.HoverImagePath;
+        existProduct.Rating = product.Rating;
+        existProduct.SKU = product.SKU;
+
 
         _context.Products.Update(existProduct);
         _context.SaveChanges();

@@ -4185,11 +4185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\ProniaAdmin-master\\ProniaAdmin.csproj",
-      "projectName": "ProniaAdmin",
-      "projectPath": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\ProniaAdmin-master\\ProniaAdmin.csproj",
+      "projectUniqueName": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\Pronia-master\\Pronia.csproj",
+      "projectName": "Pronia",
+      "projectPath": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\Pronia-master\\Pronia.csproj",
       "packagesPath": "C:\\Users\\nabdu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\ProniaAdmin-master\\obj\\",
+      "outputPath": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\Pronia-master\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

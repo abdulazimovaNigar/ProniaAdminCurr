@@ -1,37 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
-using ProniaAdmin.Contexts;
+using Pronia.Contexts;
+using Pronia.Models;
 using System.Diagnostics;
 
-namespace ProniaAdmin.Controllers;
-
-public class HomeController : Controller
+namespace Pronia.Controllers
 {
-    private AppDbContext _context;
-
-    public HomeController(AppDbContext context)
+    public class HomeController(AppDbContext _context) : Controller
     {
-        _context = context;
-    }
+        public IActionResult Index()
+        {
+            var shippings = _context.Shippings.ToList();
+            return View(shippings);
+        }
 
-    public IActionResult Index()
-    {
-        var shippings = _context.Shippings.ToList();
-        return View(shippings);
-    }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
-
-    public IActionResult LoginRegister() 
-    {
-        return View();
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

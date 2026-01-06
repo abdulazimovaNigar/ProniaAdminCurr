@@ -1,1 +1,1 @@
-﻿global using ProniaAdmin.Models;
+﻿global using Pronia.Models;

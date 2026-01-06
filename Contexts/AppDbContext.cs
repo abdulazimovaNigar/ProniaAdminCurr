@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-
-namespace ProniaAdmin.Contexts;
+namespace Pronia.Contexts;
 
 public class AppDbContext : IdentityDbContext<AppUser>
 {
@@ -10,7 +9,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
 
     public DbSet<Product> Products { get; set; }
 
-    public DbSet<Category> Categorys { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {

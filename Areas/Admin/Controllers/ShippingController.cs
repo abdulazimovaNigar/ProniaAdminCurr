@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProniaAdmin.Contexts;
+using Pronia.Abstraction;
+using Pronia.Contexts;
 
-namespace ProniaAdmin.Areas.Admin.Controllers;
+namespace Pronia.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class ShippingController(AppDbContext _context) : Controller
+[AutoValidateAntiforgeryToken]
+public class ShippingController(AppDbContext _context) : Controller, IController
 {
     public IActionResult Index()
     {
@@ -26,15 +28,6 @@ public class ShippingController(AppDbContext _context) : Controller
         shipping.CreatedDate = DateTime.UtcNow.AddHours(4);
         shipping.IsDeleted = false;
         _context.Shippings.Add(shipping);
-        _context.SaveChanges();
-        return RedirectToAction(nameof(Index));
-    }
-
-    public IActionResult Delete(int id)
-    {
-        var shipping = _context.Shippings.FirstOrDefault(s => s.Id == id);
-        if (shipping == null) return NotFound("Product isvnot found!");
-        _context.Shippings.Remove(shipping);
         _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
@@ -62,6 +55,14 @@ public class ShippingController(AppDbContext _context) : Controller
         _context.Shippings.Update(existShipping);
         _context.SaveChanges();
 
+        return RedirectToAction(nameof(Index));
+    }
+    public IActionResult Delete(int id)
+    {
+        var shipping = _context.Shippings.FirstOrDefault(s => s.Id == id);
+        if (shipping == null) return NotFound("Product isvnot found!");
+        _context.Shippings.Remove(shipping);
+        _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
 

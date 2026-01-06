@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FurniAdmin.Areas.Admin.Controllers;
+namespace Pronia.Areas.Admin.Controllers;
 
 [Area("Admin")]
 public class DashboardController : Controller

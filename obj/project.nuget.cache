@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OxQsYNWjUuM=",
+  "dgSpecHash": "I3kwWnRS0KM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\ProniaAdmin-master\\ProniaAdmin.csproj",
+  "projectFilePath": "C:\\Users\\nabdu\\Desktop\\MPA201-GitHub\\1-AdminPanel\\Pronia-master\\Pronia.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nabdu\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\nabdu\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

@@ -1,4 +1,4 @@
-namespace ProniaAdmin.Models
+namespace Pronia.Models
 {
     public class ErrorViewModel
     {

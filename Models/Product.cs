@@ -1,34 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using Pronia.Models.Common;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProniaAdmin.Models;
+namespace Pronia.Models;
 
-public class Product
+public class Product : BaseEntity
 {
-    public int Id { get; set; }
-
+    [Required]
     public string Name { get; set; }
 
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
-    [Column(TypeName = "decimal(18,2)")]
+    [Required]
+    [Precision(18,2)]
     public decimal Price { get; set; }
 
+    [Required]
     public string MainImagePath { get; set; }
 
+    [Required]
     public string HoverImagePath { get; set; }
 
-    [Column(TypeName = "decimal(2,1)")]
+    [Required]
+    [Precision(2, 1)]
     public decimal Rating { get; set; }
 
-    public string SKU { get; set; }
+    public string? SKU { get; set; }
 
+    [Required]
     public int CategoryId { get; set; }
 
-    public Category Category { get; set; }
-
-    public DateTime CreatedDate { get; set; }
-
-    public DateTime? UpdatedDate { get; set; }
-
-    public bool IsDeleted { get; set; }
+    public Category? Category { get; set; }
 }

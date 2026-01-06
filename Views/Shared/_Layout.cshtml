@@ -304,7 +304,7 @@
                                         <li>
                                             <a asp-area="Admin" asp-controller="Product" asp-action="Create">Product/Create</a>
                                         </li>
-                                        
+
                                     </ul>
                                     <ul>
                                         <!-- Category -->
@@ -315,12 +315,13 @@
                                             <a asp-area="Admin" asp-controller="Category" asp-action="Create">Category/Create</a>
                                         </li>
                                     </ul>
-
                                     <ul>
-                                        <!-- Login-Register -->
+                                        <!-- SignUp-LogIn -->
                                         <li>
-                                            <a asp-controller="Account" asp-action="Register">Account/Register</a>
-                                            
+                                            <a asp-controller="Account" asp-action="Register">Register</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Account" asp-action="Login">Login</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -939,7 +940,7 @@
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
-            @RenderBody()
+        @RenderBody()
         <!-- Begin Footer Area -->
         <div class="footer-area"
              data-bg-image="assets/images/footer/bg/1-1920x465.jpg">
