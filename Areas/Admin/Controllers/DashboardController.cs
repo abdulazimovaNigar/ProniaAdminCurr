@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Pronia.Areas.Admin.Controllers;
-
 [Area("Admin")]
-public class DashboardController : Controller
-{
-    public IActionResult Index()
+    public class DashboardController : Controller
     {
-        return View();
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
-}

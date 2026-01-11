@@ -1,77 +1,169 @@
-﻿@model Product
+﻿@model ProductUpdateVM
 
-<form method="post" asp-area="Admin" asp-controller="Product" asp-action="Update">
-    <input type="hidden" asp-for="Id" />
-    <br />
-    <h2>Update Product</h2>
+<div class="container ">
+    <div class=" row">
+        <h2>Update New Product</h2>
 
-    <div class="form-group">
-        <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
+    <form asp-area="Admin"
+          asp-controller="Product"
+          asp-action="Update"
+          method="post" enctype="multipart/form-data">
+        <div class="text-danger" asp-validation-summary="All"></div>
 
-    <div class="form-group">
-        <label asp-for="Description">Description</label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name"
+                   class="form-control"
+                   placeholder="Enter product name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Price">Price</label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Enter description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="MainImagePath">Main Image URL</label>
-        <input asp-for="MainImagePath" class="form-control" />
-        <span asp-validation-for="MainImagePath" class="text-danger"></span>
-        @if (!string.IsNullOrEmpty(Model.MainImagePath))
-        {
-            <div style="margin-top: 10px;">
-                <img src="@Model.MainImagePath" alt="Current Main Image" style="max-width: 150px; height: auto;" />
+        <div class="form-group mb-3">
+            <img src="~/assets/images/website-images/@Model.MainImageUrl" alt="Alternate Text" />
+            <input type="hidden" asp-for="MainImageUrl" />
+            <label asp-for="MainImage" class="form-label">MainImage </label>
+            <input asp-for="MainImage"
+                   class="form-control"
+                   />
+            <span asp-validation-for="MainImage" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <img src="~/assets/images/website-images/@Model.HoverImageUrl" alt="Alternate Text" />
+            <input type="hidden" asp-for="HoverImageUrl" />
+            <label asp-for="HoverImage" class="form-label">HoverImage </label>
+            <input asp-for="HoverImage"
+                   class="form-control"
+                   />
+            <span asp-validation-for="HoverImage" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label">Existing Images</label>
+
+            <div class="d-flex flex-wrap gap-3">
+                @for (int i = 0; i < Model.ImageUrls.Count; i++)
+                {
+                    string imageUrl = Model.ImageUrls[i];
+
+                    <div class="position-relative image-box" >
+                        <img src="~/assets/images/website-images/@imageUrl"
+                             width="120"
+                             class="img-thumbnail" />
+
+                        <button type="button"
+                                class="btn btn-danger btn-sm position-absolute top-0 end-0 remove-image">
+                            ✕
+                        </button>
+
+                        <input type="hidden" asp-for="ImageUrls" value="@imageUrl" />
+                        <input type="hidden" asp-for="ImageIds" value="@Model.ImageIds[i]" />
+                    </div>
+                }
             </div>
-        }
-    </div>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="HoverImagePath">Hover Image URL</label>
-        <input asp-for="HoverImagePath" class="form-control" />
-        <span asp-validation-for="HoverImagePath" class="text-danger"></span>
-        @if (!string.IsNullOrEmpty(Model.HoverImagePath))
-        {
-            <div style="margin-top: 10px;">
-                <img src="@Model.HoverImagePath" alt="Current Hover Image" style="max-width: 150px; height: auto;" />
-            </div>
-        }
-    </div>
 
-    <div class="form-group">
-        <label asp-for="Rating">Rating</label>
-        <input asp-for="Rating" class="form-control" />
-        <span asp-validation-for="Rating" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-4">
+            <label asp-for="Price" class="form-label"> Price</label>
+            <input asp-for="Price"
+                   type="number"
+                   class="form-control"
+                   min="0"
+                   max="100"
+                   placeholder="Enter Price " />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="SKU">SKU</label>
-        <input asp-for="SKU" class="form-control" />
-        <span asp-validation-for="SKU" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-4">
+            <label asp-for="SKU" class="form-label"> SKU</label>
+            <input asp-for="SKU"
+                   type="number"
+                   class="form-control"
+                   min="0"
+                   max="100"
+                   placeholder="Enter SKU " />
+            <span asp-validation-for="SKU" class="text-danger"></span>
+        </div>
+       
 
-    <div class="form-group">
-        <label asp-for="CategoryId">Category Id</label>
-        <input asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></input>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-4">
+            <label asp-for="CategoryId" class="form-label ">
+                Category
+            </label>
 
-    <div class="form-group">
-        <label asp-for="IsDeleted">Is Deleted</label>
-        <input asp-for="IsDeleted" type="checkbox" />
-    </div>
+            <select asp-for="CategoryId" class="form-select ">
+                <option value="" selected disabled>Choose a category</option>
 
-    <div style="margin-top: 10px;">
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-secondary">Cancel</a>
-    </div>
-</form>
+                @foreach (Category category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">
+                        @category.Name
+                    </option>
+                }
+            </select>
+
+            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+        </div>
+
+        @* tags *@
+        <div class="form-group mb-4">
+            <label for="exampleInputEmail1">
+                Tag
+            </label>
+            <select asp-for="TagIds">
+
+                @foreach (Tag tag in ViewBag.Tags)
+                {
+                    <option value="@tag.Id">
+                        @tag.Name
+                    </option>
+                }
+            </select>
+
+            <span asp-validation-for="TagIds" class="text-danger small"></span>
+        </div>
+
+        <div class="form-group mb-4">
+            <label asp-for="Rating" class="form-label"> Rating</label>
+            <input asp-for="Rating"
+                   type="number"
+                   class="form-control"
+                   min="0"
+                   max="5"
+                   placeholder="Enter Rating " />
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Update</button>
+            <a asp-area="Admin"
+               asp-controller="Dashboard"
+               asp-action="Index"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    const removeButtons = document.querySelectorAll('.remove-image');
+           removeButtons.forEach(button => {
+               button.addEventListener('click', function () {
+                   const parentDiv = this.parentElement;
+                   parentDiv.remove();
+               });
+              });
+</script>

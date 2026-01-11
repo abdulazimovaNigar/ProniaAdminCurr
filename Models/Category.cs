@@ -1,8 +1,9 @@
-﻿using Pronia.Models.Common;
-
-namespace Pronia.Models;
-
-public class Category : BaseEntity
+﻿namespace Pronia.Models
 {
-    public string Name { get; set; }    
+    public class Category
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+    }
 }

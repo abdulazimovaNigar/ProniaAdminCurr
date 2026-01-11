@@ -1,80 +1,103 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pronia.Contexts;
+using Pronia.Models;
 
 namespace Pronia.Areas.Admin.Controllers;
-
-[Area("Admin")]
-[AutoValidateAntiforgeryToken]
-public class CategoryController(AppDbContext _context) : Controller
-{
-    public IActionResult Index()
+    [Area("Admin")]
+    public class CategoryController : Controller
     {
-        var categorys = _context.Categories.ToList();
-        return View(categorys);
-    }
+        private readonly AppDbContext _context;
 
-    [HttpGet]
-    public IActionResult Create()
-    {
-        return View();
-    }
+        public CategoryController(AppDbContext context)
+        {
+            _context = context;
+        }
 
+        public IActionResult Index()
+        {
+            var categories = _context.Categories.ToList();
+            return View(categories);
+        }
 
-    [HttpPost]
-    public IActionResult Create(Category category)
-    {
-        if (!ModelState.IsValid) return View(category);
-        category.CreatedDate = DateTime.UtcNow.AddHours(4);
-        category.IsDeleted = false;
-        _context.Categories.Add(category);
-        _context.SaveChanges();
-        return RedirectToAction(nameof(Index));
-    }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-    public IActionResult Delete(int id)
-    {
-        var category = _context.Categories.FirstOrDefault(s => s.Id == id);
-        if (category == null) return NotFound("Product isvnot found!");
-        _context.Categories.Remove(category);
-        _context.SaveChanges();
-        return RedirectToAction(nameof(Index));
-    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
 
-    [HttpGet]
-    public IActionResult Update(int id)
-    {
-        var category = _context.Categories.FirstOrDefault(s => s.Id == id);
-        if (category == null) return NotFound();
-        return View(category);
-    }
+            bool existsCategory = _context.Categories
+                .Any(c => c.Name.ToLower() == category.Name.ToLower());
 
-    [HttpPost]
-    public IActionResult Update(Category category)
-    {
-        if (!ModelState.IsValid) return View();
+            if (existsCategory)
+            {
+                ModelState.AddModelError("Name", "This category already exists");
+                return View(category);
+            }
 
-        var existCategory = _context.Categories.FirstOrDefault(s => s.Id == category.Id);
-        if (existCategory == null) return NotFound();
+            _context.Categories.Add(category);
+            _context.SaveChanges();
 
-        existCategory.Name = category.Name;
+            return RedirectToAction(nameof(Index));
+        }
 
-        _context.Categories.Update(existCategory);
-        _context.SaveChanges();
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category == null)
+                return NotFound();
 
-        return RedirectToAction(nameof(Index));
-    }
+            return View(category);
+        }
 
-    [HttpPost]
-    public IActionResult Toggle(int id)
-    {
-        var existCategory = _context.Categories.FirstOrDefault(s => s.Id == id);
-        if (existCategory == null) return NotFound();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
 
-        existCategory.IsDeleted = !existCategory.IsDeleted;
+            bool existsCategory = _context.Categories
+                .Any(c => c.Name.ToLower() == category.Name.ToLower()
+                       && c.Id != category.Id);
 
-        _context.Categories.Update(existCategory);
-        _context.SaveChanges();
+            if (existsCategory)
+            {
+                ModelState.AddModelError("Name", "This category already exists");
+                return View(category);
+            }
 
-        return RedirectToAction("Index");
-    }
+            var dbCategory = _context.Categories.Find(category.Id);
+            if (dbCategory == null)
+                return NotFound();
+
+            dbCategory.Name = category.Name;
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category == null)
+                return NotFound();
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
 }

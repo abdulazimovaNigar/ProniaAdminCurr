@@ -1,61 +1,70 @@
-﻿@model List<Category>
+﻿﻿@Model List<Category>
+<div class="container">
+    <div class="row">
+        <h2>Categories</h2>
+        <a class="btn btn-primary my-3" asp-area="Admin" asp-controller="Category" asp-action="Create">Add New Category</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
 
-<div>
-    <div style="margin-bottom: 15px;">
-        <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-success">Create New Category</a>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <th scope="row">@category.Id</th>
+                        <td>@category.Name</td>
+                       
+                        <td>
+
+                            <a class="btn btn-warning" asp-action="Update" asp-route-id="@category.Id">Update</a>
+                            <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger deleteBtn">Delete</a>
+
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
     </div>
-<table class="table table-bordered" style="table-layout: fixed; width: 100%;">
-    <thead>
-        <tr>
-            <th style="width: 5%;">Id</th>
-            <th style="width: 40%;">Name</th>
-            <th style="width: 15%;">Created Date</th>
-            <th style="width: 10%;">Active</th>
-            <th style="width: 30%;">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in Model)
-        {
-            <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
-                <td>@category.CreatedDate.ToString("yyyy-MM-dd")</td>
-                <td>
-                    @(category.IsDeleted ? "Inactive" : "Active")
-                </td>
-                <td>
-                    <a class="btn btn-warning btn-sm"
-                       asp-area="Admin"
-                       asp-controller="Category"
-                       asp-action="Update"
-                       asp-route-id="@category.Id">
-                        Update
-                    </a>
-
-                    <form asp-area="Admin"
-                          asp-controller="Category"
-                          asp-action="Delete"
-                          asp-route-id="@category.Id"
-                          method="post"
-                          style="display:inline;">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-
-                    <form asp-area="Admin"
-                          asp-controller="Category"
-                          asp-action="Toggle"
-                          asp-route-id="@category.Id"
-                          method="post"
-                          style="display:inline; margin-left: 5px;">
-                        <button type="submit" class="btn btn-sm @(category.IsDeleted ? "btn-secondary" : "btn-info")">
-                            @(category.IsDeleted ? "Inactive" : "Active")
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 </div>
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const deleteButtons = document.querySelectorAll('.deleteBtn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const url = this.getAttribute('href');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+
+    });
+</script>

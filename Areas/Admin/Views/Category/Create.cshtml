@@ -1,29 +1,32 @@
-﻿@model Category
+﻿@model Pronia.Models.Category
 
-<form method="post" asp-area="Admin" asp-controller="Category" asp-action="Create">
-    <br />
-    <h2>Create Category</h2>
-    <div class="form-group">
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-Id">Create New Category</h4>
+                        <p class="card-Name">Fill the form to add a new card</p>
 
-        <div class="form-group">
-            <label asp-for="Name">Name</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+                        <form asp-action="Create" method="post" enctype="multipart/form-data" class="forms-sample">
+                           
+
+                            <div class="form-group">
+                                <label asp-for="Name">Name</label>
+                                <textarea asp-for="Name" class="form-control" rows="3" placeholder="Enter Name"></textarea>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary me-2">Create</button>
+                            <a asp-action="Index" class="btn btn-light">Cancel</a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div style="margin-top: 10px;">
-            <a asp-area="Admin"
-               asp-controller="Category"
-               asp-action="Index"
-               class="btn btn-secondary">
-                Cancel
-            </a>
-
-            <button type="submit" class="btn btn-primary">
-                Submit
-            </button>
-        </div>
-
     </div>
-</form>
 </div>
+
+
